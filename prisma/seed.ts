@@ -58,7 +58,6 @@ async function seedDatabase() {
           const block = await prisma.block.create({
             data: {
               authorId: user.id,
-              name: blockData.name,
               history: blockData.history,
               tags: {
                 create: blockData.tags.map((tagName: string) => ({

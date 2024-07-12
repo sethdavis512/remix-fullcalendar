@@ -1,29 +1,30 @@
 import type { Block, User } from "@prisma/client";
 import { prisma } from "~/utils/db.server";
+import { updateDocument } from "./document.server";
 
-export function createBlock({
-  content,
+export async function createBlock({
+  content, 
   userId,
-  documentId,
-}: Pick<Block, "content" | "documentId"> & {
-  userId: User["id"];
+  documentId  
 }) {
-  return prisma.block.create({
+
+  const block = await prisma.block.create({
     data: {
       content,
-      history: "tada",
-      author: {
-        connect: {
-          id: userId,
-        },
-      },
-      Document: {
-        connect: {
-          id: documentId as string,
-        },
-      },
-    },
+      authorId: userId,
+      documentId
+    }
   });
+
+  await updateDocument({
+    id: documentId, 
+    blockOrder: {
+      push: block.id
+    }
+  });
+
+  return block;
+
 }
 
 export function upsertBlock({
@@ -68,10 +69,10 @@ export function getBlocks({ userId }: { userId: User["id"] }) {
   });
 }
 
-export function updateBlock({ id, data }: { id: string; data: Block }) {
+export function updateBlock({ id, content }: { id: string; content: string }) {
   return prisma.block.update({
     where: { id },
-    data,
+    data: { content },
   });
 }
 

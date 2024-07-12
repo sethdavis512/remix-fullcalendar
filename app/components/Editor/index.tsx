@@ -135,14 +135,12 @@ interface EditorProps {
   editorValue: Descendant[];
   blockId: string;
   documentId: string;
-  documentOrder: string[];
 }
 
 const Editor = ({
   editorValue,
   blockId,
   documentId,
-  documentOrder,
 }: EditorProps): JSX.Element => {
   const editorFetcher = useFetcher();
 

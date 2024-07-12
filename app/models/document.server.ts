@@ -66,8 +66,8 @@ export function getAllDocuments() {
 // Update a document by ID
 export function updateDocument({
   id,
-  blockOrder,
   name,
+  blockOrder,
 }: {
   id: string;
   name: string;

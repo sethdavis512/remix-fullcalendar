@@ -39,7 +39,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (intent === "updateBlock") {
     await updateBlock({
       id: blockId,
-      data,
+      content,
     });
   }
 
@@ -63,7 +63,7 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const { allDocuments } = useLoaderData();
   const today = new Date();
-  const todayFormatted = formatDateToYYYYMMDD(today);
+  // const todayFormatted = formatDateToYYYYMMDD(today);
 
   return (
     <>

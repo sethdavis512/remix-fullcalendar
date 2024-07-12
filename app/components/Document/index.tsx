@@ -6,15 +6,16 @@ import { useFetcher } from "@remix-run/react";
 
 export default function Document({ document }: { document: DocumentType }) {
   const nameFetcher = useFetcher();
+  const blockOrder = document.blockOrder;
 
   return (
     <>
-      {JSON.stringify(document.blockOrder)}
+      {JSON.stringify(blockOrder)}
       <nameFetcher.Form>
         <TextInput
           id="documentName"
           label="Document name"
-          name="documentName"
+          name="name"
           defaultValue={document.name}
           onBlur={(event) =>
             nameFetcher.submit(
@@ -26,6 +27,7 @@ export default function Document({ document }: { document: DocumentType }) {
               { method: "post" }
             )
           }
+          // blockOrder={document.blockOrder}
         />
       </nameFetcher.Form>
       {/* @ts-ignore */}
@@ -49,7 +51,6 @@ export default function Document({ document }: { document: DocumentType }) {
                   ]
             }
             documentId={document.id}
-            documentOrder={document.blockOrder}
           />
         </Box>
       ))}
